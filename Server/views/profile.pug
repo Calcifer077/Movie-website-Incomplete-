@@ -1,0 +1,55 @@
+extend base
+
+block content
+    .profile-container
+        .profile-image-container
+            img.profile-image(src='/Images/joker-movie-poster.jpg', alt='user-image')
+        // profile-about starts here
+        .profile-about
+            .profile-about-main
+                .profile-about-total-films Total films
+                .profile-about-main-number 10
+            .profile-about-main
+                .profile-about-want-to-watch Want to watch
+                .profile-about-main-number 10
+            .profile-about-main
+                .profile-about-my-friends
+                    Your friends
+                .profile-about-main-number 10
+        // profile-about ends here
+        .profile-recent-reviews-heading Your recent reviews
+        .profile-recent-reviews
+            .profile-recent-reviews-items
+                .profile-recent-reviews-items-image-container
+                    img.profile-recent-reviews-items-image(src='/Images/the-batman-movie-poster-scaled.webp', alt='')
+                    .profile-recent-reviews-items-ratings.hidden
+                        .profile-recent-reviews-items-ratings-star
+                            img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                            img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                            img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                            img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                            img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                // Items desc starts here
+                .profile-recent-reviews-items-desc
+                    .profile-recent-reviews-items-name The batman
+                    span.special-text IN
+                    .profile-recent-reviews-items-year 2022
+                    span.special-text BY
+                    .profile-recent-reviews-items-director Matt reaves
+                // Item desc ends here
+                .profile-recent-reviews-review.hidden
+                    | This is your review. Lorem ipsum dolor sit amet consectetur
+                    | adipisicing elit. Expedita, sit. Lorem ipsum dolor sit amet
+                    | consectetur adipisicing elit. Officiis, reiciendis?Lorem ipsum dolor
+                    | sit amet consectetur adipisicing elit. Ea, nihil. Lorem ipsum dolor
+                    | sit amet consectetur, adipisicing elit. Dicta, iusto! Lorem ipsum,
+                    | dolor sit amet consectetur adipisicing elit. Neque fuga ab quaerat
+                    | incidunt maiores odit placeat voluptatibus unde aliquam eius, Lorem
+                    | ipsum, dolor sit amet consectetur adipisicing elit. Animi nobis iure
+                    | voluptates necessitatibus placeat illum odio quibusdam modi.
+                    | Reiciendis, animi.
+
+        a(href='/recent-reviews')
+            .go-to
+                | See all..
+                img(src='/Images/Icons/icons8-arrow-50-uncolored.png', alt='')

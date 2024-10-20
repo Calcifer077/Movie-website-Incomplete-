@@ -1,0 +1,48 @@
+extend base
+
+block content
+
+    .log-new-review
+        .log-new-review-heading-container
+            .log-new-review-heading-text
+                | Watched a good movie? Tell us about it!
+        // 'log-new-review-main-container' starts here
+        .log-new-review-main-container
+            // 'log-new-review-search' starts here
+            .log-new-review-search
+                input.log-new-review-search-input(type='text', placeholder='Search here', name='log-new-review-search-input')
+                .log-new-review-search-image
+                    img(src='/Images/Icons/icons8-search-50.png' alt='Search for a movie')
+            // 'log-new-review-search' ends here
+            .log-new-review-cant-find-it
+                | Can&apos;t find it? No problem, add now
+            form.log-new-review-form(action='submit')
+                .log-new-review-form-col-1
+                    label.log-new-review-form-title-label(for='log-new-review-form-title-input') Enter movie name
+                    input.log-new-review-form-title-input(type='text', required='', name='log-new-review-form-title-input')
+                    label.log-new-review-form-year-label(for='log-new-review-form-year-input') Enter year of release
+                    input.log-new-review-form-year-input(type='number', required='', name='log-new-review-form-year-input')
+                    label.log-new-review-form-director-label(for='log-new-review-form-director-input') Enter director name
+                    input.log-new-review-form-director-input(type='text', required='', name='log-new-review-form-director-input')
+                    label.log-new-review-form-image-label(for='log-new-review-form-image-input') Paste movie image link
+                    .log-new-review-form-image
+                        div
+                            input.log-new-review-form-image-input(type='url', name='log-new-review-form-image-input')
+                        .log-new-review-form-image-upload
+                            img(src='/Images/Icons/icons8-add-image-48.png', alt='upload image for movie poster')
+                .log-new-review-form-col-2
+                    label.log-new-review-form-review-label(for='log-new-review-form-review-input') Write your review
+                    textarea.log-new-review-form-review-input(name='log-new-review-form-review-input', rows='10')
+                    .log-new-review-form-ratings
+                        .log-new-review-form-ratings-star
+                            img(src='/Images/Icons/icons8-star-48-empty.png', alt='')
+                        .log-new-review-form-ratings-star
+                            img(src='/Images/Icons/icons8-star-48-empty.png', alt='')
+                        .log-new-review-form-ratings-star
+                            img(src='/Images/Icons/icons8-star-48-empty.png', alt='')
+                        .log-new-review-form-ratings-star
+                            img(src='/Images/Icons/icons8-star-48-empty.png', alt='')
+                        .log-new-review-form-ratings-star
+                            img(src='/Images/Icons/icons8-star-48-empty.png', alt='')
+                button.log-new-review-form-btn Submit
+        // 'log-new-review-main-container' ends here

@@ -1,0 +1,115 @@
+extends base
+
+block content   
+    .navbar
+        .navbar-title
+            a(href='/index')
+                | Movie website
+        .navbar-links
+            button.navbar-links-profile
+                a(href='/profile') Profile
+            button.navbar-links-log-review
+                a(href='/log-new-review')
+                    | Log new Review
+            .navbar-links-search-icon
+                img(src='/Images/Icons/icons8-search-50.png', alt='')
+        .navbar-search
+            .navbar-search-search.hidden
+                img(src='/Images/Icons/icons8-search-50.png', alt='')
+            .navbar-search-input.hidden
+                input.navbar-search-input-field(type='text', name='navbar-search-input-field', placeholder='Search here!')
+            .navbar-search-cross.hidden
+                img(src='/Images/Icons/icons8-close.svg', alt='Close search field')
+        .navbar-signup
+            a(href='/sign-up')
+                button Sign Up
+    .search-field
+        //
+            <div class="search-field-items">
+            <div class="search-field-items-img">
+            <img src="/Images/dune-movie-poster.jpg" alt="" class="search-field-items-image">
+            </div>
+            <div class="search-field-items-desc">
+            <div class="search-field-items-desc-name">The batman</div>
+            <div class="search-field-items-desc-director-and-year">
+            <div class="search-field-items-desc-director">
+            Matt reaves
+            </div>
+            <div class="search-field-items-desc-year">2020</div>
+            </div>
+            </div>
+            </div>
+    // <div class="gradient"></div>
+    .section-1
+        .section-1-left
+            .section-1-left-title
+                | Watch your faviorte movies and share it with the world!
+            .section-1-left-buttons
+                .section-1-left-buttons-btn1
+                    button.btn.section-1-left-buttons-btn1
+                        | See recent reviews
+                .section-1-left-buttons-btn2
+                    button.btn.section-1-left-buttons-btn2
+                        | See top movies
+    .section-2-recent-reviews
+        .section-2-recent-reviews-title
+            .section-2-heading
+                a(href='/recent-reviews')
+                    h1 Your recent reviews
+            a(href='/recent-reviews')
+                .section-2-heading-see-more.go-to
+                    img(src='/Images/Icons/icons8-arrow-50-uncolored.png', alt='')
+        // Container starts here
+        .section-2-container
+            // First item of container
+            .section-2-recent-reviews-items
+                .section-2-recent-reviews-items-image-container
+                    img.section-2-recent-reviews-items-image(src='/Images/the-batman-movie-poster-scaled.webp', alt='')
+                // Items desc starts here
+                .section-2-recent-reviews-items-desc
+                    .section-2-recent-reviews-items-name The batman
+                    span.special-text IN
+                    .section-2-recent-reviews-items-year 2022
+                    span.special-text BY
+                    .section-2-recent-reviews-items-director
+                        | Matt reaves
+
+    .section-3-top-movies
+        .section-3-top-movies-title
+            .section-3-heading
+                a(href='/top-movies')
+                    h1 Top movies
+            a(href='/top-movies')
+                .section-3-container-see-more.go-to
+                    img(src='/Images/Icons/icons8-arrow-50-uncolored.png', alt='')
+        // Container starts here
+        .section-3-container
+            // First item starts here
+            .section-3-top-movies-items
+                .section-3-top-movies-items-image-container
+                    img.section-3-top-movies-image(src='/Images/dune-movie-poster.jpg', alt='')
+                .section-3-top-movies-items-desc
+                    .section-3-top-movies-items-name Dune
+                    span.special-text IN
+                    .section-3-top-movies-items-year 2022
+                    span.special-text BY
+                    .section-3-top-movies-items-director Matt reaves
+            
+    .footer
+        .footer-title Stay in touch!
+        .footer-email-field
+            div
+                input.footer-email-input-field(type='text', name='footer-email-field', placeholder='Enter your email to recieve latest updates!')
+            span
+                img.footer-email-icon(src='/Images/Icons/icons8-arrow-48.png', alt='')
+        .footer-text
+            | You will recieve updates about your friend&apos;s activities, latest movies
+            | and much more!
+        // Footer container starts here
+        .footer-container
+            .footer-container-left
+                .footer-container-left-title
+                    h1 About ME
+            .footer-container-right
+                .footer-container-right-title
+                    h1 About this project

@@ -1,0 +1,13 @@
+/Testing
+script.js
+todo.txt
+API.txt
+how things work.txt
+log-new-review.css
+/node_modules
+/dist
+/.parcel-cache
+/src/JS/config.js
+movie.html
+config.env
+package-lock.json
