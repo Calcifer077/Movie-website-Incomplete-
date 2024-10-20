@@ -7,6 +7,11 @@
   --third-color: #f07167;
   --fourth-color: #00afb9;
   --fifth-color: #fed9b7;
+  --button-text-color: #708090;
+  --button-hover-color: #87ceeb;
+  --button-hover-text-color: #1c9ed4;
+  --button-active-color: #1c9ed4;
+  --button-active-text-color: #fff;
 }
 
 * {
@@ -37,6 +42,7 @@ a {
   text-align: center;
   z-index: 10;
   top: 0%;
+  /* padding: 10px; */
   position: relative;
   background-color: var(--first-color);
   /* box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px; */
@@ -361,6 +367,7 @@ button {
 
 .log-new-review-search {
   margin-bottom: 10px;
+  position: relative;
 }
 
 .log-new-review-search-input {
@@ -370,6 +377,14 @@ button {
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.log-new-review-search img {
+  position: absolute;
+  height: 30px;
+  right: 4px;
+  top: 5px;
+  cursor: pointer;
 }
 
 .log-new-review-cant-find-it {
@@ -451,8 +466,8 @@ button {
 }
 
 .log-new-review-form-ratings-star img {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -500,6 +515,7 @@ button {
 .recent-reviews,
 .top-movies {
   width: 100%;
+  background-color: var(--first-color);
 }
 
 .recent-reviews-heading,
@@ -507,7 +523,7 @@ button {
   text-align: center;
   font-size: 35px;
   font-weight: bold;
-  margin-top: 25px;
+  padding-top: 25px;
   margin-bottom: 25px;
   color: var(--second-color);
 }
@@ -577,6 +593,7 @@ button {
   transform: translateY(-40px);
   width: 100%;
   background-color: var(--first-color);
+  padding-bottom: 10px;
 }
 
 .section-2-recent-reviews-title,
@@ -698,6 +715,7 @@ button {
   width: 100%;
   background-color: var(--first-color);
   transform: translateY(-40px);
+  padding-bottom: 20px;
 }
 
 .section-3-container {
@@ -1016,7 +1034,7 @@ html {
   justify-content: center;
 }
 
-.movie-container {
+/* .movie-container {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
   gap: 20px;
@@ -1033,7 +1051,7 @@ html {
 .movie-container-left {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: space-between;
 }
 
 .movie-container-left-img {
@@ -1044,8 +1062,6 @@ html {
   height: 100%;
   width: 100%;
   object-fit: cover;
-  /* border-top-left-radius: 20px;
-  border-bottom-right-radius: 20px; */
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s ease;
@@ -1073,7 +1089,6 @@ html {
   flex-direction: column;
   justify-content: center;
   padding: 20px;
-  /* background-color: var(--first-color); */
   border-radius: 20px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
   text-align: center;
@@ -1108,11 +1123,182 @@ html {
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
 }
+*/
+
+.movie-container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+
+  margin: auto;
+  background-color: var(--second-color);
+  border: 1px solid black;
+}
+
+.movie-container h2 {
+  text-align: center;
+  font-size: 48px;
+  padding-top: 10px;
+}
+
+.movie-container-movie-details {
+  border: 1px solid black;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 10px;
+}
+
+.movie-container-left {
+  width: 100%;
+  height: 500px;
+}
+
+.movie-container-left-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.movie-container-right-navbar {
+  width: 85%;
+  display: flex;
+  margin-left: 50px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border: 2px solid black;
+}
+
+.movie-container-right-navbar button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--button-text-color);
+}
+
+/* This will apply to all child except last one */
+.movie-container-right-navbar button:not(:last-child) {
+  border-right: 1px solid black;
+}
+
+.movie-container-right-navbar button:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-color);
+}
+
+.movie-container-right-navbar button:first-child:hover {
+  border-top-left-radius: 20px;
+}
+
+.movie-container-right-navbar button:last-child:hover {
+  border-top-right-radius: 20px;
+}
+
+/* Active tab button styling */
+.movie-container-right-navbar-links.active {
+  color: var(--button-active-text-color);
+  background-color: var(--button-active-color);
+}
+
+.movie-container-right-navbar-links:first-child.active {
+  border-top-left-radius: 18px;
+}
+
+.movie-container-right-navbar-links:last-child.active {
+  border-top-right-radius: 18px;
+}
+
+.movie-container-right-navbar-links {
+  text-align: center;
+  width: 20%;
+  height: 35px;
+  font-size: 18px;
+}
+
+.movie-container-right-content {
+  width: 85%;
+  margin-left: 50px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.movie-container-right-content {
+  display: none;
+}
+
+/* Show the first tab by default */
+.movie-container-right-content.active {
+  display: block;
+  height: 92%;
+  border: 2px solid black;
+  border-top: 1px solid black;
+}
+
+.movie-container-reviews-section {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.movie-container-reviews-item {
+  width: 90%;
+  display: flex;
+  margin: auto;
+  border: 1px solid black;
+  background-color: var(--fifth-color);
+  border-radius: 20px;
+  border-top-left-radius: 50px;
+  padding: 10px 10px 10px 10px;
+  margin-bottom: 20px;
+}
+
+.movie-container-reviews-item-by {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-container-reviews-item-by-img {
+  height: 90px;
+  width: 90px;
+}
+
+.movie-container-reviews-item-by-image {
+  height: 100%;
+  width: 100%;
+  border-radius: 50px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.movie-container-reviews-item-by-name {
+  padding-top: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.movie-container-reviews-item-review {
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.movie-container-reviews-item-votes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.movie-container-reviews-item-votes img {
+  cursor: pointer;
+}
 
 .footer {
   width: 100%;
   bottom: 0;
   background-color: var(--fourth-color);
+  transform: translateY(-40px);
 }
 
 .footer-title {

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie</title>
+    <link rel="stylesheet" href="src/CSS/styles.css" />
+  </head>
+  <body>
+    <div class="movie-container">
+      <h2>Dune</h2>
+
+      <div class="movie-container-movie-details">
+        <div class="movie-container-left">
+          <img
+            src="src/Images/dune-movie-poster.jpg"
+            alt="movie poster"
+            class="movie-container-left-image"
+          />
+        </div>
+
+        <div class="movie-container-right">
+          <div class="movie-container-right-navbar">
+            <button
+              class="movie-container-right-navbar-links active"
+              onclick="openContent(event, 'General')"
+            >
+              General
+            </button>
+            <button
+              class="movie-container-right-navbar-links"
+              onclick="openContent(event, 'Director')"
+            >
+              Director
+            </button>
+            <button
+              class="movie-container-right-navbar-links"
+              onclick="openContent(event, 'Actor')"
+            >
+              Actor
+            </button>
+            <button
+              class="movie-container-right-navbar-links"
+              onclick="openContent(event, 'Plot')"
+            >
+              Plot
+            </button>
+            <button
+              class="movie-container-right-navbar-links"
+              onclick="openContent(event, 'Writers')"
+            >
+              Writers
+            </button>
+          </div>
+
+          <div id="General" class="movie-container-right-content active">
+            Year: 
+            Release date:
+            Runtime: 
+          </div>
+          <div id="Director" class="movie-container-right-content">
+            Director: 
+          </div>
+          <div id="Actor" class="movie-container-right-content">
+            Actors:
+          </div>
+          <div id="Plot" class="movie-container-right-content">
+            Plot
+          </div>
+          <div id="Writers" class="movie-container-right-content">
+            Writers
+          </div>
+        </div>
+      </div>
+
+      <div class="movie-container-reviews-section">
+        <div class="movie-container-reviews-item">
+          <div class="movie-container-reviews-item-by">
+            <div class="movie-container-reviews-item-by-img">
+              <img
+                src="src/Images/joker-movie-poster.jpg"
+                alt="user image"
+                class="movie-container-reviews-item-by-image"
+              />
+            </div>
+            <div class="movie-container-reviews-item-by-name">User</div>
+          </div>
+          <div class="movie-container-reviews-item-review">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex fuga
+            unde est maiores aspernatur minus quae omnis quos fugiat vero.
+          </div>
+          <div class="movie-container-reviews-item-votes">
+            <div class="movie-container-reviews-item-votes-up">
+              <img
+                src="src/Images/Icons/icons8-thumbs-up-empty-24.png"
+                alt="upvote"
+              />
+            </div>
+            <div class="movie-container-reviews-item-votes-down">
+              <img
+                src="src/Images/Icons/icons8-thumbs-down-filled-24.png"
+                alt="downvote"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="movie-container-reviews-item">
+          <div class="movie-container-reviews-item-by">
+            <div class="movie-container-reviews-item-by-img">
+              <img
+                src="src/Images/joker-movie-poster.jpg"
+                alt="user image"
+                class="movie-container-reviews-item-by-image"
+              />
+            </div>
+            <div class="movie-container-reviews-item-by-name">User</div>
+          </div>
+          <div class="movie-container-reviews-item-review">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex fuga
+            unde est maiores aspernatur minus quae omnis quos fugiat vero.
+          </div>
+          <div class="movie-container-reviews-item-votes">
+            <div class="movie-container-reviews-item-votes-up">
+              <img
+                src="src/Images/Icons/icons8-thumbs-up-empty-24.png"
+                alt="upvote"
+              />
+            </div>
+            <div class="movie-container-reviews-item-votes-down">
+              <img
+                src="src/Images/Icons/icons8-thumbs-down-filled-24.png"
+                alt="downvote"
+              />
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openContent(evt, contentName) {
+        // Get all tab contents and hide them
+        let tabContent = document.querySelectorAll(
+          ".movie-container-right-content"
+        );
+        let tabLinks = document.querySelectorAll(
+          ".movie-container-right-navbar-links"
+        );
+
+        // Hide all contents
+        tabContent.forEach((content) => {
+          content.classList.remove("active");
+        });
+
+        // Remove 'active' class from all tab buttons
+        tabLinks.forEach((link) => {
+          link.classList.remove("active");
+        });
+
+        // Show the selected content and add 'active' to the clicked tab
+        document.getElementById(contentName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
