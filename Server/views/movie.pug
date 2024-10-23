@@ -18,7 +18,10 @@ block content
                         | Summary
                     button.movie-container-right-navbar-links(onclick="openContent(event, 'Writers')")
                         | Writers
-                #General.movie-container-right-content.active= `Released Date: ${movie.released} Year: ${movie.year} Runtime: ${movie.runtime}`
+                #General.movie-container-right-content.active
+                    div= `Released Date: ${movie.released}`
+                    div= `Year: ${movie.year}`
+                    div= `Runtime: ${movie.runtime}`
                 #Director.movie-container-right-content= `Directors: ${movie.director}`
                 #Actor.movie-container-right-content= `Actors: ${movie.actors}`
                 #Summary.movie-container-right-content= `Plot: ${movie.plot}`
