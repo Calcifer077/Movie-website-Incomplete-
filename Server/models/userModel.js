@@ -42,6 +42,12 @@ const userSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
+  reviews: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Review',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {
