@@ -41,3 +41,5 @@ exports.getUser = catchAsync(async (req, res, next) => {
     data: user,
   });
 });
+
+exports.createFriends = catchAsync(async (req, res, next) => {});

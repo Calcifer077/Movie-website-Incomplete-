@@ -26,6 +26,7 @@ const createSendToken = (user, statusCode, res) => {
   };
 
   res.cookie('jwt', token, cookieOption);
+  res.cookie('user', user._id, cookieOption);
 
   // 3. Reset the user password to undefined for security
   user.password = undefined;

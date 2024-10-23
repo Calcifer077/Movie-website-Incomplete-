@@ -1,11 +1,13 @@
 const Review = require('../models/reviewModel');
+const User = require('../models/userModel');
+const Movie = require('../models/movieModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
 // exports.getAllReviews = factory.getAll(Review);
 // exports.getReview = factory.getOne(Review);
-exports.createReview = factory.createOne(Review);
+// exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
 exports.deleteReview = factory.deleteOne(Review);
 
@@ -140,5 +142,46 @@ const getAllReviewsForUser = catchAsync(async (req, res) => {
     data: {
       reviews,
     },
+  });
+});
+
+exports.createReview = catchAsync(async (req, res, next) => {
+  const reviewByMovieId = await Review.findOne({
+    movie: req.body.movie,
+  });
+
+  const reviewByUserId = await Review.findOne({
+    user: req.body.user,
+  });
+
+  if (
+    JSON.stringify(reviewByMovieId) === JSON.stringify(reviewByUserId) &&
+    reviewByMovieId != null
+  ) {
+    res.status(400).json({
+      status: 'error',
+      message: 'You have already created a review for this movie',
+    });
+  }
+
+  const newReview = await Review.create(req.body);
+
+  const user = await User.findById(newReview.user);
+
+  const updatedUserBody = {
+    reviews: [...user.reviews, newReview._id],
+  };
+
+  await User.findByIdAndUpdate(newReview.user, updatedUserBody);
+
+  if (!newReview) {
+    return next(
+      new AppError('Something went wrong while creating a new review', 404),
+    );
+  }
+
+  res.status(201).json({
+    status: 'success',
+    data: newReview,
   });
 });

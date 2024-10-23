@@ -12,8 +12,16 @@ exports.getHomePage = catchAsync(async (req, res, next) => {
 });
 
 exports.getProfile = catchAsync(async (req, res, next) => {
+  const id = req.cookies.user;
+
+  const user = await axios({
+    method: 'GET',
+    url: `http://127.0.0.1:3001/api/v1/users/${id}`,
+  });
+
   res.status(200).render('profile', {
     title: 'Profile',
+    user: user.data.data,
   });
 });
 
@@ -55,7 +63,6 @@ exports.getRecentReviewsPage = catchAsync(async (req, res, next) => {
 
 exports.getMoviePage = catchAsync(async (req, res, next) => {
   const imdbId = req.params.search.slice(1);
-  console.log(imdbId);
 
   const resultMovie = await axios({
     method: 'GET',
