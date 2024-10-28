@@ -28,7 +28,7 @@ exports.searchForMovie = catchAsync(async (req, res, next) => {
 });
 
 const getMovieBasedOnId = catchAsync(async (req, res, next) => {
-  console.log('url hit');
+  console.log('url hit.....');
   const query = req.query.i;
   const searchId = query.replaceAll(' ', '+');
 

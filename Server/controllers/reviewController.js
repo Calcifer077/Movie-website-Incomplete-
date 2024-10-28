@@ -94,13 +94,16 @@ const getReviewsForAMovie = catchAsync(async (req, res) => {
     query = query.sort('rating');
   }
 
-  console.log(query);
-
   // The above query is executed here. Here, Mongoose sends the query to MongoDb, reterives the result and assign the values to 'reviews'.
-  const reviews = await query.populate({
-    path: 'movie',
-    select: 'title -_id',
-  });
+  const reviews = await query
+    .populate({
+      path: 'movie',
+      select: 'title -_id',
+    })
+    .populate({
+      path: 'user',
+      select: 'name email -_id',
+    });
 
   if (!reviews) {
     return next(new AppError('No reviews found'), 404);
@@ -146,6 +149,7 @@ const getAllReviewsForUser = catchAsync(async (req, res) => {
 });
 
 exports.createReview = catchAsync(async (req, res, next) => {
+  // Below two documents will be used to check if the same user tries to create more than one review for the same movie.
   const reviewByMovieId = await Review.findOne({
     movie: req.body.movie,
   });
@@ -154,24 +158,38 @@ exports.createReview = catchAsync(async (req, res, next) => {
     user: req.body.user,
   });
 
+  console.log(reviewByMovieId);
+  console.log(reviewByUserId);
+
+  // If the both reviews are same.
+  // We are using 'JSON.stringify' here because it is a non-primitive data type and you can't directly compare them.
+  // If you tried to do 'reviewByMovieId === reviewByUserId', it will check if the point to the same address in the memory which will not be the case.
   if (
     JSON.stringify(reviewByMovieId) === JSON.stringify(reviewByUserId) &&
     reviewByMovieId != null
   ) {
+    // If above is the case don't update and return from this point only.
     res.status(400).json({
       status: 'error',
       message: 'You have already created a review for this movie',
     });
+
+    return next();
   }
 
+  // Create a new review from the body recieved in 'req.body'
   const newReview = await Review.create(req.body);
 
+  // Find the user that created the review so that we can update the user also.
   const user = await User.findById(newReview.user);
 
+  // Creating a updated user body.
+  // Doing it the below way because there can be already an review created by user and you don't want to delete that.
   const updatedUserBody = {
     reviews: [...user.reviews, newReview._id],
   };
 
+  // Update user
   await User.findByIdAndUpdate(newReview.user, updatedUserBody);
 
   if (!newReview) {
