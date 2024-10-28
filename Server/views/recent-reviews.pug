@@ -5,14 +5,16 @@ block content
         .recent-reviews-heading Your recent reviews
         .recent-reviews-container
             // First item starts here
-            .recent-reviews-items
-                .recent-reviews-items-image-container
-                    img.recent-reviews-image(src='/Images/dune-movie-poster.jpg', alt='')
-                .recent-reviews-items-desc
-                    .recent-reviews-items-name Dune
-                    span.special-text IN
-                    .recent-reviews-items-year 2022
-                    span.special-text BY
-                    .recent-reviews-items-director Matt reaves
+            each movie in user.movies
+                a(href=`/movie/:${movie.imdbId}`)
+                    .recent-reviews-items
+                        .recent-reviews-items-image-container
+                            img.recent-reviews-image(src=movie.poster, alt='')
+                        .recent-reviews-items-desc
+                            .recent-reviews-items-name= movie.title
+                            span.special-text IN
+                            .recent-reviews-items-year= movie.year
+                            span.special-text BY
+                            .recent-reviews-items-director= movie.director
             // First item ends here
             // Container ends here
