@@ -11,6 +11,8 @@ router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 router.patch('/updatePassword/:id', authController.updatePassword);
 
+router.route('/friends').patch(userController.createFriends);
+
 router
   .route('/')
   .get(userController.getAllUsers)
@@ -21,6 +23,8 @@ router
   .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
+
+// router.route('/friends/:id').get(userController.getFriends);
 
 router.use('/:userId/reviews', reviewRouter);
 
