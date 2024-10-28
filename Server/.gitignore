@@ -11,3 +11,5 @@ log-new-review.css
 movie.html
 config.env
 package-lock.json
+/.cache
+
