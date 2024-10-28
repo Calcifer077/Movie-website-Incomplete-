@@ -2,21 +2,21 @@
   "name": "moviessite",
   "version": "1.0.0",
   "description": "Movie review website",
-  "default": "index.html",
+  "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "start:prod": "NODE_ENV=production nodemon server.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url .",
-    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ."
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
+    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "author": "Mahesh",
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0",
     "@types/dotenv": "^6.1.1",
+    "cross-env": "^7.0.3",
     "nodemon": "^3.1.7",
-    "parcel": "^2.12.0",
     "parcel-bundler": "^1.12.5",
     "prettier": "3.2.5"
   },
