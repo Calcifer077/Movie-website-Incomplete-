@@ -28,32 +28,18 @@ block content
                 #Writers.movie-container-right-content= `Writer: ${movie.writer}`
                     
         .movie-container-reviews-section
-            .movie-container-reviews-item
-                .movie-container-reviews-item-by
-                    .movie-container-reviews-item-by-img
-                        img.movie-container-reviews-item-by-image(src='/Images/joker-movie-poster.jpg', alt='user image')
-                    .movie-container-reviews-item-by-name User
-                .movie-container-reviews-item-review
-                    | Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex fuga
-                    | unde est maiores aspernatur minus quae omnis quos fugiat vero.
-                .movie-container-reviews-item-votes
-                    .movie-container-reviews-item-votes-up
-                        img(src='/Images/Icons/icons8-thumbs-up-empty-24.png', alt='upvote')
-                    .movie-container-reviews-item-votes-down
-                        img(src='/Images/Icons/icons8-thumbs-down-filled-24.png', alt='downvote')
-            .movie-container-reviews-item
-                .movie-container-reviews-item-by
-                    .movie-container-reviews-item-by-img
-                        img.movie-container-reviews-item-by-image(src='/Images/joker-movie-poster.jpg', alt='user image')
-                    .movie-container-reviews-item-by-name User
-                .movie-container-reviews-item-review
-                    | Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex fuga
-                    | unde est maiores aspernatur minus quae omnis quos fugiat vero.
-                .movie-container-reviews-item-votes
-                    .movie-container-reviews-item-votes-up
-                        img(src='/Images/Icons/icons8-thumbs-up-empty-24.png', alt='upvote')
-                    .movie-container-reviews-item-votes-down
-                        img(src='/Images/Icons/icons8-thumbs-down-filled-24.png', alt='downvote')
+            each review in reviews
+                .movie-container-reviews-item
+                    .movie-container-reviews-item-by
+                        .movie-container-reviews-item-by-img
+                            img.movie-container-reviews-item-by-image(src='/Images/joker-movie-poster.jpg', alt='user image')
+                        .movie-container-reviews-item-by-name= review.user.name
+                    .movie-container-reviews-item-review= review.review
+                    .movie-container-reviews-item-votes
+                        .movie-container-reviews-item-votes-up
+                            img(src='/Images/Icons/icons8-thumbs-up-empty-24.png', alt='upvote')
+                        .movie-container-reviews-item-votes-down
+                            img(src='/Images/Icons/icons8-thumbs-down-filled-24.png', alt='downvote')
         script.
             function openContent(evt, contentName) {
             // Get all tab contents and hide them
