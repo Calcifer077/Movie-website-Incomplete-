@@ -48,6 +48,18 @@ const userSchema = new mongoose.Schema({
       ref: 'Review',
     },
   ],
+  likedReviews: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Review',
+    },
+  ],
+  dislikedReviews: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Review',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {
@@ -55,7 +67,7 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   // Before saving the password encrpyt it.
-  this.password = await bcrypt.hash(this.password, 10);
+  // this.password = await bcrypt.hash(this.password, 10);
 
   // Set 'passwordConfirm' to undefined
   this.passwordConfirm = undefined;
