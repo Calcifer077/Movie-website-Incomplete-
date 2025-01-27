@@ -149,36 +149,48 @@ const getAllReviewsForUser = catchAsync(async (req, res) => {
 });
 
 exports.createReview = catchAsync(async (req, res, next) => {
-  // Below two documents will be used to check if the same user tries to create more than one review for the same movie.
-  const reviewByMovieId = await Review.findOne({
-    movie: req.body.movie,
-  });
+  const movieId = req.body.movie || req.cookies.movie;
+  const userId = req.body.user || req.cookies.user;
 
-  const reviewByUserId = await Review.findOne({
-    user: req.body.user,
+  // Here, we are checking if a review already exists for a particular combination of 'user' and 'movie'.
+  const reviewIfAlreadyExists = await Review.findOne({
+    user: userId,
+    movie: movieId,
   });
-
-  console.log(reviewByMovieId);
-  console.log(reviewByUserId);
 
   // If the both reviews are same.
   // We are using 'JSON.stringify' here because it is a non-primitive data type and you can't directly compare them.
   // If you tried to do 'reviewByMovieId === reviewByUserId', it will check if the point to the same address in the memory which will not be the case.
-  if (
-    JSON.stringify(reviewByMovieId) === JSON.stringify(reviewByUserId) &&
-    reviewByMovieId != null
-  ) {
-    // If above is the case don't update and return from this point only.
+  // if (
+  //   JSON.stringify(reviewByMovieId) === JSON.stringify(reviewByUserId) &&
+  //   reviewByMovieId != null
+  // ) {
+  //   // If above is the case don't update and return from this point only.
+  //   res.status(400).json({
+  //     status: 'error',
+  //     message: 'You have already created a review for this movie',
+  //   });
+
+  //   return next();
+  // }
+
+  if (reviewIfAlreadyExists) {
     res.status(400).json({
       status: 'error',
-      message: 'You have already created a review for this movie',
+      message: 'You have already created a review for this move',
     });
 
     return next();
   }
 
+  const newReviewBody = {
+    movie: movieId,
+    user: userId,
+    ...req.body,
+  };
+
   // Create a new review from the body recieved in 'req.body'
-  const newReview = await Review.create(req.body);
+  const newReview = await Review.create(newReviewBody);
 
   // Find the user that created the review so that we can update the user also.
   const user = await User.findById(newReview.user);
@@ -201,5 +213,57 @@ exports.createReview = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: 'success',
     data: newReview,
+  });
+});
+
+exports.createReviewLikesAndDislikes = catchAsync(async (req, res, next) => {
+  const userId = req.body.userId || req.cookies.user;
+  const reviewId = req.body.reviewId;
+  const type = req.body.type;
+
+  const review = await Review.findById(reviewId);
+  const user = await User.findById(userId);
+
+  let updatedReview;
+  let updatedUser;
+
+  if (type === 'like') {
+    const likes = [...review.likes, userId];
+    const likedReviews = [...user.likedReviews, reviewId];
+
+    updatedReview = await Review.findByIdAndUpdate(
+      reviewId,
+      { likes: likes },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { likedReviews: likedReviews },
+      { new: true, runValidators: true },
+    );
+  } else if (type === 'dislike') {
+    const dislikes = [...review.dislikes, userId];
+    const dislikedReviews = [...user.dislikedReviews, reviewId];
+    updatedReview = await Review.findByIdAndUpdate(
+      reviewId,
+      { dislikes: dislikes },
+      { new: true, runValidators: true },
+    );
+
+    updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { dislikedReviews: dislikedReviews },
+      { new: true, runValidators: true },
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    updatedReview,
+    updatedUser,
   });
 });
