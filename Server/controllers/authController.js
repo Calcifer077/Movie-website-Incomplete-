@@ -97,6 +97,8 @@ exports.logout = (req, res) => {
     httpOnly: true,
   });
 
+  res.cookie('user', null);
+
   // 2. Send response
   res.status(200).json({
     message: 'success',
