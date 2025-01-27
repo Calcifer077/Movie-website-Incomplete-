@@ -10,6 +10,10 @@ router
   .post(reviewController.createReview);
 
 router
+  .route('/updateLikesAndDislikes')
+  .patch(reviewController.createReviewLikesAndDislikes);
+
+router
   .route('/:id')
   .get(reviewController.getReview)
   .patch(reviewController.updateReview)
