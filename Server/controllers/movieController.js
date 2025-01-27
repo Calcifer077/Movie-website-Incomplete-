@@ -28,7 +28,6 @@ exports.searchForMovie = catchAsync(async (req, res, next) => {
 });
 
 const getMovieBasedOnId = catchAsync(async (req, res, next) => {
-  console.log('url hit.....');
   const query = req.query.i;
   const searchId = query.replaceAll(' ', '+');
 
@@ -52,17 +51,17 @@ const getMovieBasedOnId = catchAsync(async (req, res, next) => {
     imdbId: data.imdbID,
   };
 
-  const checkIfMoviePresent = await Movie.findOne({
+  const movieIfPresent = await Movie.findOne({
     imdbId: dataToBeSent.imdbId,
   });
 
-  if (!checkIfMoviePresent) {
+  if (!movieIfPresent) {
     await Movie.create(dataToBeSent);
   }
 
   res.status(200).json({
     status: 'success',
-    dataToBeSent,
+    movieIfPresent,
   });
 });
 
