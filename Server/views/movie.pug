@@ -1,35 +1,44 @@
 extend base
-
+  
 block content
     .movie-container
-        h2= movie.title
-        .movie-container-movie-details
-            .movie-container-left
-                img.movie-container-left-image(src=`${movie.poster}`, alt=`${movie.title}`)
-            .movie-container-right
-                .movie-container-right-navbar
-                    button.movie-container-right-navbar-links.active(onclick="openContent(event, 'General')")
-                        | General
-                    button.movie-container-right-navbar-links(onclick="openContent(event, 'Director')")
-                        | Director
-                    button.movie-container-right-navbar-links(onclick="openContent(event, 'Actor')")
-                        | Actor
-                    button.movie-container-right-navbar-links(onclick="openContent(event, 'Summary')")
-                        | Summary
-                    button.movie-container-right-navbar-links(onclick="openContent(event, 'Writers')")
-                        | Writers
-                #General.movie-container-right-content.active
-                    div= `Released Date: ${movie.released}`
-                    div= `Year: ${movie.year}`
-                    div= `Runtime: ${movie.runtime}`
-                #Director.movie-container-right-content= `Directors: ${movie.director}`
-                #Actor.movie-container-right-content= `Actors: ${movie.actors}`
-                #Summary.movie-container-right-content= `Plot: ${movie.plot}`
-                #Writers.movie-container-right-content= `Writer: ${movie.writer}`
+        .movie-main-container
+            h2= movie.title
+            .movie-container-movie-details
+                .movie-container-left
+                    img.movie-container-left-image(src=`${movie.poster}`, alt=`${movie.title}`)
+                .movie-container-right
+                    .movie-container-right-navbar
+                        button.movie-container-right-navbar-links.active(onclick="openContent(event, 'General')")
+                            | General
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Director')")
+                            | Director
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Actor')")
+                            | Actor
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Summary')")
+                            | Summary
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Writers')")
+                            | Writers
+                    #General.movie-container-right-content.active
+                        div= `Released Date: ${movie.released}`
+                        div= `Year: ${movie.year}`
+                        div= `Runtime: ${movie.runtime}`
+                    #Director.movie-container-right-content= `Directors: ${movie.director}`
+                    #Actor.movie-container-right-content= `Actors: ${movie.actors}`
+                    #Summary.movie-container-right-content= `Plot: ${movie.plot}`
+                    #Writers.movie-container-right-content= `Writer: ${movie.writer}`
+
+            form.movie-container-write-review
+                h1 Write your review here!
+                .movie-container-write-review-container.scrollable-input
+                    textarea(type='text', placeholder='Your thoughts', rows='5' class='movie-container-write-review-container-textarea')
+                    input(type='number', min='1', max='5', placeholder='Rating' class='movie-container-write-review-container-input-rating')
+                    button.movie-container-write-review-btn Submit
                     
         .movie-container-reviews-section
             each review in reviews
                 .movie-container-reviews-item
+                    .movie-container-reviews-item-id= review._id     
                     .movie-container-reviews-item-by
                         .movie-container-reviews-item-by-img
                             img.movie-container-reviews-item-by-image(src='/Images/joker-movie-poster.jpg', alt='user image')
@@ -38,6 +47,7 @@ block content
                     .movie-container-reviews-item-votes
                         .movie-container-reviews-item-votes-up
                             img(src='/Images/Icons/icons8-thumbs-up-empty-24.png', alt='upvote')
+                        .movie-container-reviews-item-votes-number 1
                         .movie-container-reviews-item-votes-down
                             img(src='/Images/Icons/icons8-thumbs-down-filled-24.png', alt='downvote')
         script.

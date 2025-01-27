@@ -11,18 +11,15 @@ block content
             button.navbar-links-log-review
                 a(href='/log-new-review')
                     | Log new Review
-            .navbar-links-search-icon
-                img(src='/Images/Icons/icons8-search-50.png', alt='')
-        .navbar-search
-            .navbar-search-search.hidden
-                img(src='/Images/Icons/icons8-search-50.png', alt='')
-            .navbar-search-input.hidden
-                input.navbar-search-input-field(type='text', name='navbar-search-input-field', placeholder='Search here!')
-            .navbar-search-cross.hidden
-                img(src='/Images/Icons/icons8-close.svg', alt='Close search field')
-        .navbar-signup
-            a(href='/sign-up')
-                button Sign Up
+
+        if user !== null
+            .navbar-logout
+                button Logout
+        else
+            .navbar-signup
+                a(href='/sign-up')
+                    button Sign Up
+        
     .search-field
         //
             <div class="search-field-items">
