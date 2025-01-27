@@ -2,8 +2,10 @@
 
 import axios from 'axios';
 import { showAlert } from './alert.js';
+import { showLoading } from './showLoading.js';
 
 export const login = async (email, password) => {
+  showLoading(true);
   try {
     const res = await axios({
       method: 'POST',
@@ -22,6 +24,8 @@ export const login = async (email, password) => {
   } catch (err) {
     console.log(err);
     showAlert('error', 'An error occured while trying to log you in.');
+  } finally {
+    showLoading(false);
   }
 };
 
@@ -31,6 +35,7 @@ export const signUpWithEmail = async (
   password,
   passwordConfirm,
 ) => {
+  showLoading(true);
   try {
     const res = await axios({
       method: 'POST',
@@ -49,5 +54,22 @@ export const signUpWithEmail = async (
   } catch (err) {
     console.log(err);
     showAlert('error', 'An error occured while signing up!');
+  } finally {
+    showLoading(false);
+  }
+};
+
+export const logout = async () => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: '/api/v1/users/logout',
+    });
+
+    if (res.data.message === 'success') {
+      location.reload(true);
+    }
+  } catch (err) {
+    showAlert('error', 'An error occured while logging out');
   }
 };
