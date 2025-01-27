@@ -7,9 +7,18 @@ const AppError = require('../utils/appError');
 const { move } = require('../routes/viewRoutes');
 
 exports.getHomePage = catchAsync(async (req, res, next) => {
-  console.log('route hit');
+  let user;
+  if (req.cookies.jwt === 'loggedout') {
+    user = null;
+  } else {
+    user = req.cookies.user;
+  }
+
+  console.log(user);
+
   res.status(200).render('index', {
     title: 'moviesite',
+    user,
   });
 });
 
@@ -81,6 +90,12 @@ exports.getTopMoviesPage = catchAsync(async (req, res, next) => {
 
 exports.getRecentReviewsPage = catchAsync(async (req, res, next) => {
   const id = req.cookies.user;
+
+  if (id === 'j:null') {
+    res.status(200).render('sign-up', {
+      title: 'Sign up',
+    });
+  }
   const user = await getDataForProfilePage(id);
 
   res.status(200).render('recent-reviews', {
@@ -90,29 +105,35 @@ exports.getRecentReviewsPage = catchAsync(async (req, res, next) => {
 });
 
 exports.getMoviePage = catchAsync(async (req, res, next) => {
+  const cookieOption = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+    ),
+    // secure: true, // only in production
+    httpOnly: true,
+  };
+
+  res.cookie('movie', null);
+
   const imdbId = req.params.search.slice(1);
 
+  // Below call is used to get data about a particular movie based on its imdb title.
   const resultMovie = await axios({
     method: 'GET',
     url: `http://127.0.0.1:3001/api/v1/movies/search/?i=${imdbId}`,
   });
 
-  // console.log(resultMovie.data.dataToBeSent.imdbId);
-
-  const movie = await Movie.findOne({
-    imdbId: resultMovie.data.dataToBeSent.imdbId,
-  });
-
-  const resultReviews = await axios({
-    method: 'GET',
-    url: `http://127.0.0.1:3001/api/v1/movies/${movie._id}/reviews`,
-  });
-
-  // console.log(resultReviews.data.data.review);
-  console.log(resultReviews.data.data.reviews);
-
   if (resultMovie.data.status === 'success') {
-    const movie = resultMovie.data.dataToBeSent;
+    const movie = resultMovie.data.movieIfPresent;
+    // Below call gets data about routes for a particular movie.
+    const resultReviews = await axios({
+      method: 'GET',
+      url: `http://127.0.0.1:3001/api/v1/movies/${movie._id}/reviews`,
+    });
+
+    // Setting cookie of the current movie.
+    res.cookie('movie', movie._id, cookieOption);
+
     res.status(200).render('movie', {
       title: `Movie | ${movie.title}`,
       reviews: resultReviews.data.data.reviews,
