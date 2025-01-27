@@ -7,7 +7,7 @@ const reviewSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      min: 1,
+      min: 0,
       max: 5,
     },
     movie: {
@@ -20,6 +20,18 @@ const reviewSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'A review must belong to a user'],
     },
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    ],
+    dislikes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
