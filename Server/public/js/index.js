@@ -64,7 +64,7 @@ if (logReviewForm) {
       '.log-new-review-search-input',
     ).value;
 
-    console.log(searchQuery);
+    // console.log(searchQuery);
     searchForMovie(searchQuery);
   });
 
@@ -99,7 +99,7 @@ if (writeReview) {
         'Please tell us something about movie in review section',
       );
     } else {
-      console.log(writeReviewInput, writeReviewRating);
+      // console.log(writeReviewInput, writeReviewRating);
       createReview(writeReviewInput, writeReviewRating);
     }
   });

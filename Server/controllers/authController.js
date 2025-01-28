@@ -236,8 +236,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('Token is invalid or has expired'), 404);
   }
 
-  console.log(user);
-  console.log(hashedToken);
+  // console.log(user);
+  // console.log(hashedToken);
   // 3. If token has not expired and user exists set the password
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;

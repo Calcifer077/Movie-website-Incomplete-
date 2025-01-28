@@ -6,27 +6,6 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const { move } = require('../routes/viewRoutes');
 
-exports.getHomePage = catchAsync(async (req, res, next) => {
-  let user;
-  if (req.cookies.jwt === 'loggedout') {
-    user = null;
-  } else {
-    user = req.cookies.user;
-  }
-
-  console.log(user);
-
-  res.status(200).render('index', {
-    title: 'moviesite',
-    user,
-  });
-});
-
-// To get movies data
-const getMoviesData = async (movies) => {
-  return await Movie.findById(movies.movie);
-};
-
 async function getDataForProfilePage(id) {
   const user = await axios({
     method: 'GET',
@@ -47,6 +26,33 @@ async function getDataForProfilePage(id) {
 
   return finalUser;
 }
+
+exports.getHomePage = catchAsync(async (req, res, next) => {
+  const id = req.cookies.user;
+
+  if (id !== 'j:null') {
+    const data = await getDataForProfilePage(id);
+
+    res.status(200).render('index', {
+      title: 'moviesite',
+      id,
+      data,
+    });
+
+    return next;
+  }
+  const user = null;
+
+  res.status(200).render('index', {
+    title: 'moviesite',
+    user,
+  });
+});
+
+// To get movies data
+const getMoviesData = async (movies) => {
+  return await Movie.findById(movies.movie);
+};
 
 exports.getProfile = catchAsync(async (req, res, next) => {
   const id = req.cookies.user;
@@ -125,6 +131,7 @@ exports.getMoviePage = catchAsync(async (req, res, next) => {
 
   if (resultMovie.data.status === 'success') {
     const movie = resultMovie.data.movieIfPresent;
+    // console.log(movie);
     // Below call gets data about routes for a particular movie.
     const resultReviews = await axios({
       method: 'GET',

@@ -67,7 +67,7 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   // Before saving the password encrpyt it.
-  // this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
 
   // Set 'passwordConfirm' to undefined
   this.passwordConfirm = undefined;
@@ -99,7 +99,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
       10,
     );
 
-    console.log(JWTTimeStamp, changedTimeStamp);
+    // console.log(JWTTimeStamp, changedTimeStamp);
     return JWTTimeStamp < changedTimeStamp;
   }
 
@@ -109,7 +109,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
-  console.log(resetToken);
+  // console.log(resetToken);
 
   this.passwordResetToken = crypto
     .createHash('sha256')

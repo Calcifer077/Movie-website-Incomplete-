@@ -19,7 +19,6 @@ export const createReview = async (review, rating) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Review created successfully');
 
-      console.log('did something');
       window.setTimeout(() => {
         location.reload(true);
       }, 2000);
