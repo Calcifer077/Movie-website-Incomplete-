@@ -34,7 +34,7 @@ block content
                     textarea(type='text', placeholder='Your thoughts', rows='5' class='movie-container-write-review-container-textarea')
                     input(type='number', min='1', max='5', placeholder='Rating' class='movie-container-write-review-container-input-rating')
                     button.movie-container-write-review-btn Submit
-                    
+                     
         .movie-container-reviews-section
             each review in reviews
                 .movie-container-reviews-item
@@ -47,9 +47,9 @@ block content
                     .movie-container-reviews-item-votes
                         .movie-container-reviews-item-votes-up
                             img(src='/Images/Icons/icons8-thumbs-up-empty-24.png', alt='upvote')
-                        .movie-container-reviews-item-votes-number 1
+                        .movie-container-reviews-item-votes-number= review.votes
                         .movie-container-reviews-item-votes-down
-                            img(src='/Images/Icons/icons8-thumbs-down-filled-24.png', alt='downvote')
+                            img(src='/Images/Icons/icons8-thumbs-down-empty-24.png', alt='downvote')
         script.
             function openContent(evt, contentName) {
             // Get all tab contents and hide them

@@ -1,6 +1,10 @@
 extend base
 
 block content
+    .log-new-review-test-data TEST DATA
+        br
+        | tt0118799, tt0111161, .tt0111161
+
     // 'log-new-review' starts here
     .log-new-review
         // 'log-new-review-container' starts here
@@ -10,6 +14,8 @@ block content
                     | Watched a good movie? 
                     br
                     |  Tell us about it
+                    br
+                    | Kindly use imdb id here 🙏.
             form.log-new-review-search
                 input.log-new-review-search-input(type='text', placeholder='Search here', name='log-new-review-search-input')
                 img.log-new-review-search-image(src='/Images/Icons/icons8-search-50.png')
