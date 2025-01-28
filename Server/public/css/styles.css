@@ -88,6 +88,7 @@ h1 {
 
 a {
   text-decoration: none;
+  color: black;
 }
 
 .navbar {
@@ -337,6 +338,13 @@ button {
   overflow: auto;
 }
 
+.log-new-review-test-data {
+  position: absolute;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 /* Main container */
 .log-new-review {
   width: 100%;
@@ -562,6 +570,11 @@ button {
 }
 
 .section-2-recent-reviews-items {
+  border: 2px solid black;
+  height: 60hv;
+  width: 40vw;
+  display: flex;
+  border-radius: 15px;
   margin-bottom: 30px;
   background-color: var(--second-color);
 }
@@ -569,10 +582,9 @@ button {
 .profile-recent-reviews-items,
 .recent-reviews-items,
 .top-movies-items,
-.section-2-recent-reviews-items,
 .section-3-top-movies-items {
   border: 2px solid black;
-  height: 60hv;
+  height: 60vh;
   width: 40vw;
   display: flex;
   border-radius: 15px;
@@ -588,11 +600,19 @@ button {
 }
 
 .profile-recent-reviews-items-image,
+.section-2-recent-reviews-items-image {
+  width: 253px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
 .recent-reviews-image,
 .top-movies-image,
-.section-2-recent-reviews-items-image,
 .section-3-top-movies-image {
-  width: 100%;
+  width: 253px;
   height: 100%;
   object-fit: cover;
   border-top-left-radius: 12px;
@@ -747,6 +767,14 @@ button {
 .special-green-text {
   font-weight: bold;
   color: green;
+}
+
+.sign-in-container-test-data {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 /* Sign-in container styling */
@@ -1305,6 +1333,11 @@ html {
   bottom: 0;
   background-color: var(--fourth-color);
   transform: translateY(-40px);
+}
+
+.footer a {
+  text-decoration: none;
+  color: black;
 }
 
 .footer-title {
