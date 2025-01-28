@@ -39,6 +39,11 @@ const reviewSchema = new mongoose.Schema(
   },
 );
 
+// Adding a virual field, which are not persisited in the database but is available for all documents.
+reviewSchema.virtual('votes').get(function () {
+  return (this.likes?.length || 0) - (this.dislikes?.length || 0);
+});
+
 const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;
