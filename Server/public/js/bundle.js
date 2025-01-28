@@ -6079,15 +6079,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.showLoading = void 0;
 var showLoading = exports.showLoading = function showLoading(isLoading) {
-  // const loaderParent = document.querySelector('.loader-parent');
   var loader = document.querySelector('.loader');
   if (isLoading) {
-    // loaderParent.style.display = 'flex';
     loader.style.display = 'block';
   } else {
-    // loaderParent.style.display = 'none';
     loader.style.display = 'none';
-    console.log('did');
   }
 };
 },{}],"auth.js":[function(require,module,exports) {
@@ -6323,7 +6319,6 @@ var createReview = exports.createReview = /*#__PURE__*/function () {
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _alert.showAlert)('success', 'Review created successfully');
-            console.log('did something');
             window.setTimeout(function () {
               location.reload(true);
             }, 2000);
@@ -6437,7 +6432,8 @@ if (logReviewForm) {
   var searchIconReviewForm = document.querySelector('.log-new-review-search-image');
   searchIconReviewForm.addEventListener('click', function () {
     var searchQuery = document.querySelector('.log-new-review-search-input').value;
-    console.log(searchQuery);
+
+    // console.log(searchQuery);
     (0, _movies.searchForMovie)(searchQuery);
   });
   logReviewForm.addEventListener('submit', function (e) {
@@ -6458,7 +6454,7 @@ if (writeReview) {
     } else if (!writeReviewInput) {
       (0, _alert.showAlert)('error', 'Please tell us something about movie in review section');
     } else {
-      console.log(writeReviewInput, writeReviewRating);
+      // console.log(writeReviewInput, writeReviewRating);
       (0, _review.createReview)(writeReviewInput, writeReviewRating);
     }
   });
@@ -6502,7 +6498,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55720" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61800" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -6647,4 +6643,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/js/bundle.js.map
+//# sourceMappingURL=/bundle.js.map
