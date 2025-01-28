@@ -152,6 +152,8 @@ exports.createReview = catchAsync(async (req, res, next) => {
   const movieId = req.body.movie || req.cookies.movie;
   const userId = req.body.user || req.cookies.user;
 
+  // console.log(movieId, userId);
+
   // Here, we are checking if a review already exists for a particular combination of 'user' and 'movie'.
   const reviewIfAlreadyExists = await Review.findOne({
     user: userId,
@@ -224,41 +226,82 @@ exports.createReviewLikesAndDislikes = catchAsync(async (req, res, next) => {
   const review = await Review.findById(reviewId);
   const user = await User.findById(userId);
 
+  // Check if review and user exist
+  if (!review || !user) {
+    return res.status(404).json({
+      status: 'error',
+      message: 'Review or User not found',
+    });
+  }
+
   let updatedReview;
   let updatedUser;
 
-  if (type === 'like') {
-    const likes = [...review.likes, userId];
-    const likedReviews = [...user.likedReviews, reviewId];
-
+  // Function to update review and user
+  const updateReviewAndUser = async (
+    likes,
+    dislikes,
+    likedReviews,
+    dislikedReviews,
+  ) => {
     updatedReview = await Review.findByIdAndUpdate(
       reviewId,
-      { likes: likes },
-      {
-        new: true,
-        runValidators: true,
-      },
+      { likes, dislikes },
+      { new: true, runValidators: true },
     );
 
     updatedUser = await User.findByIdAndUpdate(
       userId,
-      { likedReviews: likedReviews },
+      { likedReviews, dislikedReviews },
       { new: true, runValidators: true },
     );
+  };
+
+  if (type === 'like') {
+    // If a user have already liked a review and still trying to like it send error.
+    if (review.likes.includes(userId)) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'You have already liked this review',
+      });
+    }
+
+    // Spreading already existing likes and adding new one in it.
+    const likes = [...review.likes, userId];
+
+    // Removing likes from dislikes.
+    const dislikes = review.dislikes.filter((id) => {
+      id !== userId;
+    });
+    const likedReviews = [...user.likedReviews, reviewId];
+    const dislikedReviews = user.dislikedReviews.filter((id) => {
+      id !== reviewId;
+    });
+
+    await updateReviewAndUser(likes, dislikes, likedReviews, dislikedReviews);
   } else if (type === 'dislike') {
+    if (review.dislikes.includes(userId)) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'You have already disliked this review',
+      });
+    }
+
+    const likes = review.likes.filter((id) => {
+      id !== userId;
+    });
     const dislikes = [...review.dislikes, userId];
     const dislikedReviews = [...user.dislikedReviews, reviewId];
-    updatedReview = await Review.findByIdAndUpdate(
-      reviewId,
-      { dislikes: dislikes },
-      { new: true, runValidators: true },
-    );
+    const likedReviews = user.likedReviews.filter((id) => {
+      id !== reviewId;
+    });
 
-    updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { dislikedReviews: dislikedReviews },
-      { new: true, runValidators: true },
-    );
+    await updateReviewAndUser(likes, dislikes, likedReviews, dislikedReviews);
+  } else {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Invalid type. Must be "like" or "dislike".',
+    });
   }
 
   res.status(200).json({
