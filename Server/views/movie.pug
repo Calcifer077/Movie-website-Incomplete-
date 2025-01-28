@@ -1,0 +1,73 @@
+extend base
+  
+block content
+    .movie-container
+        .movie-main-container
+            h2= movie.title
+            .movie-container-movie-details
+                .movie-container-left
+                    img.movie-container-left-image(src=`${movie.poster}`, alt=`${movie.title}`)
+                .movie-container-right
+                    .movie-container-right-navbar
+                        button.movie-container-right-navbar-links.active(onclick="openContent(event, 'General')")
+                            | General
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Director')")
+                            | Director
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Actor')")
+                            | Actor
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Summary')")
+                            | Summary
+                        button.movie-container-right-navbar-links(onclick="openContent(event, 'Writers')")
+                            | Writers
+                    #General.movie-container-right-content.active
+                        div= `Released Date: ${movie.released}`
+                        div= `Year: ${movie.year}`
+                        div= `Runtime: ${movie.runtime}`
+                    #Director.movie-container-right-content= `Directors: ${movie.director}`
+                    #Actor.movie-container-right-content= `Actors: ${movie.actors}`
+                    #Summary.movie-container-right-content= `Plot: ${movie.plot}`
+                    #Writers.movie-container-right-content= `Writer: ${movie.writer}`
+
+            form.movie-container-write-review
+                h1 Write your review here!
+                .movie-container-write-review-container.scrollable-input
+                    textarea(type='text', placeholder='Your thoughts', rows='5' class='movie-container-write-review-container-textarea')
+                    input(type='number', min='1', max='5', placeholder='Rating' class='movie-container-write-review-container-input-rating')
+                    button.movie-container-write-review-btn Submit
+                     
+        .movie-container-reviews-section
+            each review in reviews
+                .movie-container-reviews-item
+                    .movie-container-reviews-item-id= review._id     
+                    .movie-container-reviews-item-by
+                        .movie-container-reviews-item-by-img
+                            img.movie-container-reviews-item-by-image(src='/Images/joker-movie-poster.jpg', alt='user image')
+                        .movie-container-reviews-item-by-name= review.user.name
+                    .movie-container-reviews-item-review= review.review
+                    .movie-container-reviews-item-votes
+                        .movie-container-reviews-item-votes-up
+                            img(src='/Images/Icons/icons8-thumbs-up-empty-24.png', alt='upvote')
+                        .movie-container-reviews-item-votes-number= review.votes
+                        .movie-container-reviews-item-votes-down
+                            img(src='/Images/Icons/icons8-thumbs-down-empty-24.png', alt='downvote')
+        script.
+            function openContent(evt, contentName) {
+            // Get all tab contents and hide them
+            let tabContent = document.querySelectorAll(
+            ".movie-container-right-content"
+            );
+            let tabLinks = document.querySelectorAll(
+            ".movie-container-right-navbar-links"
+            );
+            // Hide all contents
+            tabContent.forEach((content) => {
+            content.classList.remove("active");
+            });
+            // Remove 'active' class from all tab buttons
+            tabLinks.forEach((link) => {
+            link.classList.remove("active");
+            });
+            // Show the selected content and add 'active' to the clicked tab
+            document.getElementById(contentName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            }

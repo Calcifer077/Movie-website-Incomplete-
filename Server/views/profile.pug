@@ -1,0 +1,86 @@
+extend base
+ 
+block content
+    .profile-container
+        .profile-image-container
+            img.profile-image(src='/Images/joker-movie-poster.jpg', alt='user-image')
+        // profile-about starts here
+        .profile-about
+            .profile-about-main
+                .profile-about-total-films Total films
+                .profile-about-main-number= user.movies.length
+            .profile-about-main
+                .profile-about-my-friends Your friends 
+                .profile-about-main-number= user.user.friends.length
+        // profile-about ends here
+        .profile-recent-reviews-heading Your recent reviews
+        .profile-recent-reviews
+            if user.movies.length > 1
+                a(href=`/movie/:${user.movies[0].imdbId}`)
+                    .profile-recent-reviews-items
+                        .profile-recent-reviews-items-image-container
+                            img.profile-recent-reviews-items-image(src= user.movies[0].poster, alt='')
+                            .profile-recent-reviews-items-ratings.hidden
+                                .profile-recent-reviews-items-ratings-star
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                        // Items desc starts here
+                        .profile-recent-reviews-items-desc
+                            .profile-recent-reviews-items-name= user.movies[0].title
+                            span.special-text IN
+                            .profile-recent-reviews-items-year= user.movies[0].year
+                            span.special-text BY
+                            .profile-recent-reviews-items-director= user.movies[0].director
+                        // Item desc ends here
+                        .profile-recent-reviews-review.hidden
+
+                a(href=`/movie/:${user.movies[1].imdbId}`)
+                    .profile-recent-reviews-items
+                        .profile-recent-reviews-items-image-container
+                            img.profile-recent-reviews-items-image(src= user.movies[1].poster, alt='')
+                            .profile-recent-reviews-items-ratings.hidden
+                                .profile-recent-reviews-items-ratings-star
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                        // Items desc starts here
+                        .profile-recent-reviews-items-desc
+                            .profile-recent-reviews-items-name= user.movies[1].title
+                            span.special-text IN
+                            .profile-recent-reviews-items-year= user.movies[1].year
+                            span.special-text BY
+                            .profile-recent-reviews-items-director= user.movies[1].director
+                        // Item desc ends here
+                        .profile-recent-reviews-review.hidden
+
+            if user.movies.length === 1
+                a(href=`/movie/:${user.movies[0].imdbId}`)
+                    .profile-recent-reviews-items
+                        .profile-recent-reviews-items-image-container
+                            img.profile-recent-reviews-items-image(src= user.movies[0].poster, alt='')
+                            .profile-recent-reviews-items-ratings.hidden
+                                .profile-recent-reviews-items-ratings-star
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                                    img.profile-rating-stars(src='/Images/Icons/icons8-star-48-filled.png', alt='')
+                        // Items desc starts here
+                        .profile-recent-reviews-items-desc
+                            .profile-recent-reviews-items-name= user.movies[0].title
+                            span.special-text IN
+                            .profile-recent-reviews-items-year= user.movies[0].year
+                            span.special-text BY
+                            .profile-recent-reviews-items-director= user.movies[0].director
+                        // Item desc ends here
+                        .profile-recent-reviews-review.hidden
+
+        a(href='/recent-reviews')
+            .go-to
+                | See all..
+                img(src='/Images/Icons/icons8-arrow-50-uncolored.png', alt='')

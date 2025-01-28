@@ -1,0 +1,16 @@
+/node_modules
+/Testing
+/data
+script.js
+todo.txt
+API.txt
+how things work.txt
+log-new-review.css
+/dist
+/.parcel-cache
+/src/JS/config.js
+movie.html
+config.env
+package-lock.json
+/.cache
+

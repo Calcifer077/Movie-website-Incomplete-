@@ -1,0 +1,31 @@
+extend base
+
+block content 
+    .overlay
+        .sign-up-email-container
+            // Sign-in-form-container starts here
+            .sign-up-email-form-container
+                .sign-up-email-form-container-heading
+                    h1 Start your amazing journey here!
+                // sign-in-form starts here
+                
+                form(action='').sign-up-email-form
+                    .sign-up-email-form-name
+                        label.sign-up-email-form-name-label(for='sign-up-email-form-name-input') Enter your name
+                        input.sign-up-email-form-name-input(type='text', name='sign-up-email-form-name-input')
+                    .sign-up-email-form-email
+                        label.sign-up-email-form-email-label(for='sign-up-email-form-email-input')
+                            | Enter your email
+                        input.sign-up-email-form-email-input(type='text', name='sign-up-email-form-email-input')
+                    .sign-up-email-form-password
+                        label.sign-up-email-form-password-label(for='sign-up-email-form-password-input')
+                            | Enter your password
+                        input.sign-up-email-form-password-input(type='password', name='sign-up-email-form-password-input')
+                    .sign-up-email-form-password-confirm
+                        label.sign-up-email-form-password-confirm-label(for='sign-up-email-form-password-confirm-input')
+                            | Enter your password again
+                        input.sign-up-email-form-password-confirm-input(type='password', name='sign-up-email-form-password-confirm-input')
+                    .sign-up-email-form-btn
+                        button.sign-up-email-form-button Sign up
+            // sign-in-form ends here
+            // sign-in-form-container ends here

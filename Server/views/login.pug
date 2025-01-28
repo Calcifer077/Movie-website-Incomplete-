@@ -1,0 +1,27 @@
+extend base
+
+block content 
+    .overlay
+        .sign-in-container-test-data 
+            span Email: admin@moviesite.io
+            br
+            span Password: test1234
+        .sign-in-container
+            // Sign-in-form-container starts here
+            .sign-in-form-container
+                .sign-in-form-container-heading
+                    h1 Welcome back!
+    
+                form(action='').sign-in-form
+                    .sign-in-form-email
+                        label.sign-in-form-email-label(for='sign-in-form-email-input')
+                            | Enter your email
+                        input.sign-in-form-email-input(type='text', name='sign-in-form-email-input')
+                    .sign-in-form-password
+                        label.sign-in-form-password-label(for='sign-in-form-password-input')
+                            | Enter your password
+                        input.sign-in-form-password-input(type='password', name='sign-in-form-password-input')
+                    .sign-in-form-btn
+                        button.sign-in-form-button Login
+                // sign-in-form ends here
+                // sign-in-form-container ends here
