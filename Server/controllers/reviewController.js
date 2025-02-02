@@ -1,6 +1,6 @@
 const Review = require('../models/reviewModel');
 const User = require('../models/userModel');
-const Movie = require('../models/movieModel');
+// const Movie = require('../models/movieModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
@@ -9,7 +9,7 @@ const factory = require('./handlerFactory');
 // exports.getReview = factory.getOne(Review);
 // exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
-exports.deleteReview = factory.deleteOne(Review);
+// exports.deleteReview = factory.deleteOne(Review);
 
 exports.getAllReviews = catchAsync(async (req, res) => {
   // If there is 'moviesId' in the parameters go to another function
@@ -150,7 +150,9 @@ const getAllReviewsForUser = catchAsync(async (req, res) => {
 
 exports.createReview = catchAsync(async (req, res, next) => {
   const movieId = req.body.movie || req.cookies.movie;
-  const userId = req.body.user || req.cookies.user;
+  const userId = req.body.user || req.user._id;
+
+  // console.log(userId);
 
   // console.log(movieId, userId);
 
@@ -219,7 +221,8 @@ exports.createReview = catchAsync(async (req, res, next) => {
 });
 
 exports.createReviewLikesAndDislikes = catchAsync(async (req, res, next) => {
-  const userId = req.body.userId || req.cookies.user;
+  // console.log(req.user);
+  const userId = req.user._id;
   const reviewId = req.body.reviewId;
   const type = req.body.type;
 
@@ -308,5 +311,56 @@ exports.createReviewLikesAndDislikes = catchAsync(async (req, res, next) => {
     status: 'success',
     updatedReview,
     updatedUser,
+  });
+
+  // res.status(200).json({
+  //   status: 'success',
+  //   data: null,
+  // });
+});
+
+exports.deleteReview = catchAsync(async (req, res, next) => {
+  const toBeDeletedReview = await Review.findById(req.params.id);
+
+  if (!toBeDeletedReview) {
+    return next(new AppError('No document found with that ID', 404));
+  }
+
+  // If we are deleting a review then we also need to update user details of the user who created that review and also the details of user who have liked or disliked that review.
+
+  // First find that user.
+  const userToBeUpdated = await User.findOne({ reviews: req.params.id });
+  // console.log(userToBeUpdated);
+
+  // console.log(userToBeUpdated._id.toString());
+  // console.log(req.user._id);
+
+  // console.log(userToBeUpdated._id.equals(req.user._id));
+  if (!userToBeUpdated._id.equals(req.user._id)) {
+    return next(new AppError('You are not authorized to do this action', 404));
+  }
+
+  // Update his reviews
+  userToBeUpdated.reviews = userToBeUpdated.reviews.filter(
+    (review) => review.toString() !== req.params.id,
+  );
+
+  // Update his liked reviews
+  userToBeUpdated.likedReivews = userToBeUpdated.likedReviews.filter(
+    (likedReviews) => likedReviews.toString() !== req.params.id,
+  );
+
+  // Update his disliked reviews
+  userToBeUpdated.dislikedReviews = userToBeUpdated.dislikedReviews.filter(
+    (dislikedReivews) => dislikedReivews.toString() !== req.params.id,
+  );
+
+  // Save that user to database.
+  await userToBeUpdated.save({ validateBeforeSave: false });
+  await Review.findByIdAndDelete(req.params.id);
+
+  res.status(200).json({
+    status: 'success',
+    data: null,
   });
 });

@@ -14,6 +14,7 @@ exports.updateMovie = factory.updateOne(Movie);
 exports.deleteMovie = factory.deleteOne(Movie);
 
 exports.searchForMovie = catchAsync(async (req, res, next) => {
+  // console.log('searching for a movie');
   if (req.query.i) {
     return getMovieBasedOnId(req, res, next);
   }
@@ -28,6 +29,7 @@ exports.searchForMovie = catchAsync(async (req, res, next) => {
 });
 
 const getMovieBasedOnId = catchAsync(async (req, res, next) => {
+  // console.log(req.headers);
   const query = req.query.i;
   const searchId = query.replaceAll(' ', '+');
 

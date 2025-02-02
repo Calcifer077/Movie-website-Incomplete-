@@ -26,7 +26,8 @@ const createSendToken = (user, statusCode, res) => {
   };
 
   res.cookie('jwt', token, cookieOption);
-  res.cookie('user', user._id, cookieOption);
+  console.log('token sent');
+  // res.cookie('user', user._id, cookieOption);
 
   // 3. Reset the user password to undefined for security
   user.password = undefined;
@@ -72,6 +73,8 @@ exports.login = catchAsync(async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  console.log('login route hit');
+
   // 2. Check if both email and password are present in the body
   if (!email || !password) {
     return next(new AppError('Please provide both email and password', 404));
@@ -92,12 +95,11 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.logout = (req, res) => {
   // 1. Just reset the cookie
-  res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-
-  res.cookie('user', null);
+  res.clearCookie('jwt');
+  // res.cookie('jwt', 'loggedout', {
+  //   expires: new Date(Date.now() + 10 * 1000),
+  //   httpOnly: true,
+  // });
 
   // 2. Send response
   res.status(200).json({
@@ -106,7 +108,11 @@ exports.logout = (req, res) => {
 };
 
 exports.protect = catchAsync(async (req, res, next) => {
+  // console.log('Entered this block');
+  // console.log(req.cookies.jwt);
+  // console.log(req.headers);
   // 1. Getting token
+  // How you will get token. Get it form req.headers.
   let token;
   if (
     req.headers.authorization &&
@@ -117,13 +123,16 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.cookies.jwt;
   }
 
-  // How you will get token. Get it form req.headers.
-  // 2. Check if the token is present. If the token is not present it means the user is not logged in.
-  if (!token) {
-    return next(new AppError('You are not logged in. Please log in.'), 404);
-  }
+  console.log(token, 'authcontroller');
 
-  // console.log(token);
+  if (!token) {
+    // 2. Check if the token is present. If the token is not present it means the user is not logged in.
+    // return next(new AppError('You are not logged in. Please log in.'), 404);
+
+    res.redirect('/sign-up');
+
+    return next;
+  }
 
   // 3.Validate token(Verification) do it with the help of 'jwt.verify'
   const decoded = await promisify(jwt.verify)(
@@ -152,10 +161,35 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.isLoggedIn = catchAsync(async (req, res, next) => {
-  // 1. Get token and check if its there
-  // 2.
-});
+exports.isLoggedIn = async (req, res, next) => {
+  // 1. Getting token and check if its there
+  if (req.cookies.jwt) {
+    try {
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET,
+      );
+
+      const currentUser = await User.findById(decoded.id);
+
+      if (!currentUser) {
+        return next();
+      }
+
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      // There is a logged in user
+      // 'res.locals' is used variables for the pug templates. In the below line we have set a variable named 'user' which will be avaialable in the templates.
+      res.locals.user = currentUser;
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
+};
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
