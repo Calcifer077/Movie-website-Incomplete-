@@ -48,8 +48,10 @@ block content
                         .movie-container-reviews-item-votes-up
                             img(src='/Images/Icons/icons8-thumbs-up-empty-24.png', alt='upvote')
                         .movie-container-reviews-item-votes-number= review.votes
-                        .movie-container-reviews-item-votes-down
+                        .movie-container-reviews-item-votes-down 
                             img(src='/Images/Icons/icons8-thumbs-down-empty-24.png', alt='downvote')
+                    .movie-container-reviews-item-delete    
+                        img(src='/Images/Icons/icons8-remove-24.png', alt='delete')
         script.
             function openContent(evt, contentName) {
             // Get all tab contents and hide them

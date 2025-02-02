@@ -1,6 +1,6 @@
 extends base
 
-block content   
+block content    
     .navbar
         .navbar-title
             a(href='/')
@@ -11,13 +11,14 @@ block content
             a(href='/log-new-review')
                 button.navbar-links-log-review Log new Review
 
-        if user !== null
-            .navbar-logout
-                button Logout
-        else
+        if user === null
             .navbar-signup
                 a(href='/sign-up')
                     button Sign Up
+        else
+            .navbar-logout
+                button Logout
+            
         
     .search-field
         //
@@ -59,32 +60,32 @@ block content
                     img(src='/Images/Icons/icons8-arrow-50-uncolored.png', alt='')
         // Container starts here
         .section-2-container
-            if user !== null
-                if data.reviews
-                    // First item of container
-                    .section-2-recent-reviews-items
-                        .section-2-recent-reviews-items-image-container
-                            img.section-2-recent-reviews-items-image(src=`${data.movies[0].poster}`, alt='')
-                        // Items desc starts here
-                        .section-2-recent-reviews-items-desc
-                            .section-2-recent-reviews-items-name= data.movies[0].title
-                            span.special-text IN
-                            .section-2-recent-reviews-items-year= data.movies[0].year
-                            span.special-text BY
-                            .section-2-recent-reviews-items-director= data.movies[0].director
-            else 
-                // First item of container
-                .section-2-recent-reviews-items
-                    .section-2-recent-reviews-items-image-container
-                        img.section-2-recent-reviews-items-image(src='/Images/the-batman-movie-poster-scaled.webp', alt='')
-                    // Items desc starts here
-                    .section-2-recent-reviews-items-desc
-                        .section-2-recent-reviews-items-name The batman
-                        span.special-text IN
-                        .section-2-recent-reviews-items-year 2022
-                        span.special-text BY
-                        .section-2-recent-reviews-items-director
-                            | Matt reaves
+            //- if user !== null
+            //-     if data.reviews.length > 0
+            //-         // First item of container
+            //-         .section-2-recent-reviews-items
+            //-             .section-2-recent-reviews-items-image-container
+            //-                 img.section-2-recent-reviews-items-image(src=`${data.movies[0].poster}`, alt='')
+            //-             // Items desc starts here
+            //-             .section-2-recent-reviews-items-desc
+            //-                 .section-2-recent-reviews-items-name= data.movies[0].title
+            //-                 span.special-text IN
+            //-                 .section-2-recent-reviews-items-year= data.movies[0].year
+            //-                 span.special-text BY
+            //-                 .section-2-recent-reviews-items-director= data.movies[0].director
+            //- else 
+            // First item of container
+            .section-2-recent-reviews-items
+                .section-2-recent-reviews-items-image-container
+                    img.section-2-recent-reviews-items-image(src='/Images/the-batman-movie-poster-scaled.webp', alt='')
+                // Items desc starts here
+                .section-2-recent-reviews-items-desc
+                    .section-2-recent-reviews-items-name The batman
+                    span.special-text IN
+                    .section-2-recent-reviews-items-year 2022
+                    span.special-text BY
+                    .section-2-recent-reviews-items-director
+                        | Matt reaves
 
     .section-3-top-movies
         .section-3-top-movies-title
