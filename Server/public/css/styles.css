@@ -12,6 +12,8 @@
   --button-hover-text-color: #1c9ed4;
   --button-active-color: #1c9ed4;
   --button-active-text-color: #fff;
+  --text-green: #51cf66;
+  --text-red: #f03e3e;
 }
 
 * {
@@ -57,38 +59,12 @@ body {
   scrollbar-color: #007bff #f0f0f0; /* thumb color and track color */
 }
 
-.alert {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  z-index: 9999;
-  color: #fff;
-  font-size: 25px;
-  font-weight: 300;
-  text-align: center;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  padding: 30px 50px;
-  -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
-  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
-}
-
-.alert--success {
-  background-color: #20bf6b;
-}
-.alert--error {
-  background-color: #eb4d4b;
-}
-
 h1 {
   font-family: 'Merriweather', serif;
 }
 
 a {
   text-decoration: none;
-  color: black;
 }
 
 .navbar {
@@ -582,6 +558,7 @@ button {
 .profile-recent-reviews-items,
 .recent-reviews-items,
 .top-movies-items,
+.section-2-recent-reviews-items,
 .section-3-top-movies-items {
   border: 2px solid black;
   height: 60vh;
@@ -609,8 +586,10 @@ button {
   border-bottom-left-radius: 12px;
 }
 
+.profile-recent-reviews-items-image,
 .recent-reviews-image,
 .top-movies-image,
+.section-2-recent-reviews-items-image,
 .section-3-top-movies-image {
   width: 253px;
   height: 100%;
@@ -764,17 +743,25 @@ button {
   margin-top: 20px;
 }
 
-.special-green-text {
-  font-weight: bold;
-  color: green;
-}
-
 .sign-in-container-test-data {
   position: absolute;
   top: 0;
   left: 0;
   font-size: 24px;
   font-weight: bold;
+}
+
+.special-green-text {
+  font-weight: bold;
+  color: green;
+}
+
+.positive {
+  color: var(--text-green);
+}
+
+.negative {
+  color: var(--text-red);
 }
 
 /* Sign-in container styling */
@@ -1281,10 +1268,10 @@ html {
 .movie-container-reviews-item-id {
   display: none;
 }
-
 .movie-container-reviews-item-by {
   display: flex;
   flex-direction: column;
+  margin-right: 8px;
 }
 
 .movie-container-reviews-item-by-img {
@@ -1307,7 +1294,8 @@ html {
 }
 
 .movie-container-reviews-item-review {
-  min-width: 855px;
+  min-width: 82%;
+  max-width: 85%;
   padding-left: 20px;
   display: flex;
   align-items: center;
@@ -1328,18 +1316,29 @@ html {
   cursor: pointer;
 }
 
+.movie-container-reviews-item-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 1%;
+  margin-bottom: 1%;
+}
+
+.movie-container-reviews-item-delete img {
+  cursor: pointer;
+}
+
 .footer {
   width: 100%;
   bottom: 0;
   background-color: var(--fourth-color);
   transform: translateY(-40px);
 }
-
 .footer a {
   text-decoration: none;
   color: black;
 }
-
 .footer-title {
   text-align: center;
   font-size: 60px;
@@ -1390,32 +1389,6 @@ html {
   margin-bottom: 20px;
 }
 
-/* .loader-parent {
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-}
-
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid ff3d00;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} */
-
 .go-up {
   position: fixed;
   bottom: 15;
@@ -1436,38 +1409,6 @@ html {
   height: 61px;
 }
 
-/* .loader {
-  width: 48px;
-  height: 48px;
-  border: 3px solid #fff;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-  z-index: 1000;
-}
-
-.loader::after {
-  content: '';
-  box-sizing: border-box;
-  left: 0;
-  top: 0;
-  background: #ff3d00;
-  width: 16px;
-  height: 16px;
-  transform: translate(-50%, 50%);
-  border-radius: 50%;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} */
-
 .loader {
   position: fixed;
   top: 50%;
@@ -1487,4 +1428,29 @@ html {
   to {
     clip-path: inset(0 -34% 0 0);
   }
+}
+
+.alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 25px;
+  font-weight: 300;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 30px 50px;
+  -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+}
+
+.alert--success {
+  background-color: #20bf6b;
+}
+.alert--error {
+  background-color: #eb4d4b;
 }
