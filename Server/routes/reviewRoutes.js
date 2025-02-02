@@ -7,16 +7,16 @@ const router = express.Router({ mergeParams: true });
 router
   .route('/')
   .get(reviewController.getAllReviews)
-  .post(reviewController.createReview);
+  .post(authController.protect, reviewController.createReview);
 
 router
   .route('/updateLikesAndDislikes')
-  .patch(reviewController.createReviewLikesAndDislikes);
+  .patch(authController.protect, reviewController.createReviewLikesAndDislikes);
 
 router
   .route('/:id')
-  .get(reviewController.getReview)
-  .patch(reviewController.updateReview)
-  .delete(reviewController.deleteReview);
+  .get(authController.protect, reviewController.getReview)
+  .patch(authController.protect, reviewController.updateReview)
+  .delete(authController.protect, reviewController.deleteReview);
 
 module.exports = router;
