@@ -6120,29 +6120,30 @@ var login = exports.login = /*#__PURE__*/function () {
           });
         case 4:
           res = _context.sent;
+          console.log('login route called');
           if (res.data.message === 'success') {
             console.log('Login successfull!');
             (0, _alert.showAlert)('success', 'Logged in successfully');
             window.setTimeout(function () {
               location.assign('/');
-            }, 3000);
+            }, 1000);
           }
-          _context.next = 12;
+          _context.next = 13;
           break;
-        case 8:
-          _context.prev = 8;
+        case 9:
+          _context.prev = 9;
           _context.t0 = _context["catch"](1);
           console.log(_context.t0);
           (0, _alert.showAlert)('error', 'An error occured while trying to log you in.');
-        case 12:
-          _context.prev = 12;
+        case 13:
+          _context.prev = 13;
           (0, _showLoading.showLoading)(false);
-          return _context.finish(12);
-        case 15:
+          return _context.finish(13);
+        case 16:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[1, 8, 12, 15]]);
+    }, _callee, null, [[1, 9, 13, 16]]);
   }));
   return function login(_x, _x2) {
     return _ref.apply(this, arguments);
@@ -6173,7 +6174,7 @@ var signUpWithEmail = exports.signUpWithEmail = /*#__PURE__*/function () {
             (0, _alert.showAlert)('success', 'Signed up successfully');
             window.setTimeout(function () {
               location.assign('/');
-            }, 3000);
+            }, 1000);
           }
           console.log(res);
           _context2.next = 13;
@@ -6289,7 +6290,7 @@ var searchForMovie = exports.searchForMovie = /*#__PURE__*/function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.likeAndDislikeReview = exports.createReview = void 0;
+exports.likeAndDislikeReview = exports.deleteReview = exports.createReview = void 0;
 var _axios = _interopRequireDefault(require("axios"));
 var _alert = require("./alert");
 var _showLoading = require("./showLoading");
@@ -6321,7 +6322,7 @@ var createReview = exports.createReview = /*#__PURE__*/function () {
             (0, _alert.showAlert)('success', 'Review created successfully');
             window.setTimeout(function () {
               location.reload(true);
-            }, 2000);
+            }, 1000);
           }
           _context.next = 11;
           break;
@@ -6365,7 +6366,7 @@ var likeAndDislikeReview = exports.likeAndDislikeReview = /*#__PURE__*/function 
           if (res.data.status === 'success') {
             window.setTimeout(function () {
               location.reload(true);
-            }, 2000);
+            }, 1000);
           }
           _context2.next = 11;
           break;
@@ -6385,6 +6386,47 @@ var likeAndDislikeReview = exports.likeAndDislikeReview = /*#__PURE__*/function 
   }));
   return function likeAndDislikeReview(_x3, _x4) {
     return _ref2.apply(this, arguments);
+  };
+}();
+var deleteReview = exports.deleteReview = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(reviewId) {
+    var id, res;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          (0, _showLoading.showLoading)(true);
+          id = reviewId;
+          _context3.next = 5;
+          return (0, _axios.default)({
+            method: 'DELETE',
+            url: "/api/v1/reviews/".concat(id)
+          });
+        case 5:
+          res = _context3.sent;
+          if (res.data.status === 'success') {
+            window.setTimeout(function () {
+              location.reload(true);
+            }, 1000);
+          }
+          _context3.next = 12;
+          break;
+        case 9:
+          _context3.prev = 9;
+          _context3.t0 = _context3["catch"](0);
+          (0, _alert.showAlert)('error', _context3.t0.response.data.message);
+        case 12:
+          _context3.prev = 12;
+          (0, _showLoading.showLoading)(false);
+          return _context3.finish(12);
+        case 15:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, null, [[0, 9, 12, 15]]);
+  }));
+  return function deleteReview(_x5) {
+    return _ref3.apply(this, arguments);
   };
 }();
 },{"axios":"../../node_modules/axios/index.js","./alert":"alert.js","./showLoading":"showLoading.js"}],"index.js":[function(require,module,exports) {
@@ -6418,8 +6460,6 @@ if (signUpForm) {
     var email = document.querySelector('.sign-up-email-form-email-input').value;
     var password = document.querySelector('.sign-up-email-form-password-input').value;
     var passwordConfirm = document.querySelector('.sign-up-email-form-password-confirm-input').value;
-
-    // console.log(name, email, password, passwordConfirm);
     (0, _auth.signUpWithEmail)(name, email, password, passwordConfirm);
   });
 }
@@ -6464,12 +6504,23 @@ if (movieReviewSection) {
   movieReviewItems.forEach(function (element) {
     var upVote = element.querySelector('.movie-container-reviews-item-votes-up');
     var downVote = element.querySelector('.movie-container-reviews-item-votes-down');
+    var numberOfVotes = element.querySelector('.movie-container-reviews-item-votes-number');
+    var deleteBtn = element.querySelector('.movie-container-reviews-item-delete');
     var reviewId = element.querySelector('.movie-container-reviews-item-id').textContent;
+    if (Number(numberOfVotes.textContent) > 0) {
+      numberOfVotes.classList.add('positive');
+      numberOfVotes.textContent = "+".concat(numberOfVotes.textContent);
+    } else if (Number(numberOfVotes.textContent) < 0) {
+      numberOfVotes.classList.add('negative');
+    }
     upVote.addEventListener('click', function () {
       (0, _review.likeAndDislikeReview)(reviewId, 'like');
     });
     downVote.addEventListener('click', function () {
       (0, _review.likeAndDislikeReview)(reviewId, 'dislike');
+    });
+    deleteBtn.addEventListener('click', function () {
+      (0, _review.deleteReview)(reviewId);
     });
   });
 }
@@ -6498,7 +6549,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61800" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51215" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -6643,4 +6694,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/bundle.js.map
+//# sourceMappingURL=/js/bundle.js.map

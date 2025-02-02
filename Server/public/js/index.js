@@ -3,7 +3,7 @@
 import { showAlert } from './alert.js';
 import { login, signUpWithEmail, logout } from './auth.js';
 import { searchForMovie } from './movies.js';
-import { createReview, likeAndDislikeReview } from './review.js';
+import { createReview, likeAndDislikeReview, deleteReview } from './review.js';
 
 const logoutBtn = document.querySelector('.navbar-logout');
 const loginForm = document.querySelector('.sign-in-form');
@@ -43,7 +43,6 @@ if (signUpForm) {
       '.sign-up-email-form-password-confirm-input',
     ).value;
 
-    // console.log(name, email, password, passwordConfirm);
     signUpWithEmail(name, email, password, passwordConfirm);
   });
 }
@@ -117,9 +116,23 @@ if (movieReviewSection) {
     const downVote = element.querySelector(
       '.movie-container-reviews-item-votes-down',
     );
+    const numberOfVotes = element.querySelector(
+      '.movie-container-reviews-item-votes-number',
+    );
+
+    const deleteBtn = element.querySelector(
+      '.movie-container-reviews-item-delete',
+    );
     const reviewId = element.querySelector(
       '.movie-container-reviews-item-id',
     ).textContent;
+
+    if (Number(numberOfVotes.textContent) > 0) {
+      numberOfVotes.classList.add('positive');
+      numberOfVotes.textContent = `+${numberOfVotes.textContent}`;
+    } else if (Number(numberOfVotes.textContent) < 0) {
+      numberOfVotes.classList.add('negative');
+    }
 
     upVote.addEventListener('click', function () {
       likeAndDislikeReview(reviewId, 'like');
@@ -127,6 +140,10 @@ if (movieReviewSection) {
 
     downVote.addEventListener('click', function () {
       likeAndDislikeReview(reviewId, 'dislike');
+    });
+
+    deleteBtn.addEventListener('click', function () {
+      deleteReview(reviewId);
     });
   });
 }

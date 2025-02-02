@@ -13,13 +13,14 @@ export const login = async (email, password) => {
       data: { email, password },
     });
 
+    console.log('login route called');
     if (res.data.message === 'success') {
       console.log('Login successfull!');
       showAlert('success', 'Logged in successfully');
 
       window.setTimeout(() => {
         location.assign('/');
-      }, 3000);
+      }, 1000);
     }
   } catch (err) {
     console.log(err);
@@ -48,7 +49,7 @@ export const signUpWithEmail = async (
 
       window.setTimeout(() => {
         location.assign('/');
-      }, 3000);
+      }, 1000);
     }
     console.log(res);
   } catch (err) {

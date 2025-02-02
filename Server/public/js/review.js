@@ -21,7 +21,7 @@ export const createReview = async (review, rating) => {
 
       window.setTimeout(() => {
         location.reload(true);
-      }, 2000);
+      }, 1000);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
@@ -45,7 +45,28 @@ export const likeAndDislikeReview = async (reviewId, type) => {
     if (res.data.status === 'success') {
       window.setTimeout(() => {
         location.reload(true);
-      }, 2000);
+      }, 1000);
+    }
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+  } finally {
+    showLoading(false);
+  }
+};
+
+export const deleteReview = async (reviewId) => {
+  try {
+    showLoading(true);
+    let id = reviewId;
+    const res = await axios({
+      method: 'DELETE',
+      url: `/api/v1/reviews/${id}`,
+    });
+
+    if (res.data.status === 'success') {
+      window.setTimeout(() => {
+        location.reload(true);
+      }, 1000);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
